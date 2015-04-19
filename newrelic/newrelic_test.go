@@ -65,4 +65,10 @@ func TestLoadAPICredentials(t *testing.T) {
 	assert.EqualError(t, err, "Error while loading newrelic credentials. "+
 		"Missing API key")
 	assert.Equal(t, creds, APICredentials{})
+
+	defer patchEnv("NEWRELIC_CREDS", "/I/do/not/exist")()
+	creds, err = LoadAPICredentials()
+	assert.EqualError(t, err, "open /I/do/not/exist: no such file or directory")
+	assert.Equal(t, creds, APICredentials{})
+
 }
