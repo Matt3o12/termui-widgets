@@ -17,7 +17,7 @@ var TestTimestamp = time.Unix(1257894000, 0)
 
 func PatchClient() func() {
 	if HTTPServer == nil {
-		HTTPServer = httpPlus.SetupTestServer(path.Join(".."))
+		HTTPServer = httpPlus.SetupTestServer(path.Join("..", "hackernews"))
 	}
 
 	return PatchAPIBaseURL(HTTPServer.URL)

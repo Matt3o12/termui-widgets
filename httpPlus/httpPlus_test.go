@@ -40,7 +40,7 @@ func TestServer(t *testing.T) {
 	assert.NotNil(t, server)
 
 	// Create folder hierarchy
-	resourcePath := path.Join(testDir, "resources", "api", "foo", "bar")
+	resourcePath := path.Join(testDir, "resources", "foo", "bar")
 	if err := os.MkdirAll(resourcePath, 0777); !assert.NoError(t, err) {
 		t.FailNow()
 	}
@@ -75,6 +75,13 @@ func TestServerNotFound(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 404, resp.StatusCode)
 
-	expeted := "open %v/resources/api/index.html: no such file or directory\n"
-	assert.Equal(t, fmt.Sprintf(expeted, testDir), readResp(t, resp))
+	expeted := "open %v/resources/index.html: no such file or directory\n"
+	assert.Equal(t, readResp(t, resp), fmt.Sprintf(expeted, testDir))
+}
+
+func BenchmarkSetupTestServerAndClose(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		server := SetupTestServer("/dev/null")
+		server.Close()
+	}
 }

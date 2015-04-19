@@ -11,7 +11,7 @@ import (
 
 // GetResourcePath returns the resoure path for the server.
 func GetResourcePath(baseDir string) (path string) {
-	path, err := filepath.Abs(filepath.Join(baseDir, "resources", "api"))
+	path, err := filepath.Abs(filepath.Join(baseDir, "resources"))
 	if err != nil {
 		panic(err)
 	}
